@@ -1,18 +1,16 @@
 # Copyright 2014-2015 Canonical Limited.
 #
-# This file is part of charm-helpers.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
 #
-# charm-helpers is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License version 3 as
-# published by the Free Software Foundation.
+#  http://www.apache.org/licenses/LICENSE-2.0
 #
-# charm-helpers is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Lesser General Public License for more details.
-#
-# You should have received a copy of the GNU Lesser General Public License
-# along with charm-helpers.  If not, see <http://www.gnu.org/licenses/>.
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 import logging
 import re
@@ -43,9 +41,6 @@ class OpenStackAmuletDeployment(AmuletDeployment):
         self.openstack = openstack
         self.source = source
         self.stable = stable
-        # Note(coreycb): this needs to be changed when new next branches come
-        # out.
-        self.current_next = "trusty"
 
     def get_logger(self, name="deployment-logger", level=logging.DEBUG):
         """Get a logger object that will log to stdout."""
@@ -72,38 +67,34 @@ class OpenStackAmuletDeployment(AmuletDeployment):
 
         self.log.info('OpenStackAmuletDeployment:  determine branch locations')
 
-        # Charms outside the lp:~openstack-charmers namespace
-        base_charms = ['mysql', 'mongodb', 'nrpe']
-
-        # Force these charms to current series even when using an older series.
-        # ie. Use trusty/nrpe even when series is precise, as the P charm
-        # does not possess the necessary external master config and hooks.
-        force_series_current = ['nrpe']
-
-        if self.series in ['precise', 'trusty']:
-            base_series = self.series
-        else:
-            base_series = self.current_next
+        # Charms outside the ~openstack-charmers
+        base_charms = {
+            'mysql': ['precise', 'trusty'],
+            'mongodb': ['precise', 'trusty'],
+            'nrpe': ['precise', 'trusty'],
+        }
 
         for svc in other_services:
-            if svc['name'] in force_series_current:
-                base_series = self.current_next
             # If a location has been explicitly set, use it
             if svc.get('location'):
                 continue
-            if self.stable:
-                temp = 'lp:charms/{}/{}'
-                svc['location'] = temp.format(base_series,
-                                              svc['name'])
+            if svc['name'] in base_charms:
+                # NOTE: not all charms have support for all series we
+                #       want/need to test against, so fix to most recent
+                #       that each base charm supports
+                target_series = self.series
+                if self.series not in base_charms[svc['name']]:
+                    target_series = base_charms[svc['name']][-1]
+                svc['location'] = 'cs:{}/{}'.format(target_series,
+                                                    svc['name'])
+            elif self.stable:
+                svc['location'] = 'cs:{}/{}'.format(self.series,
+                                                    svc['name'])
             else:
-                if svc['name'] in base_charms:
-                    temp = 'lp:charms/{}/{}'
-                    svc['location'] = temp.format(base_series,
-                                                  svc['name'])
-                else:
-                    temp = 'lp:~openstack-charmers/charms/{}/{}/next'
-                    svc['location'] = temp.format(self.current_next,
-                                                  svc['name'])
+                svc['location'] = 'cs:~openstack-charmers-next/{}/{}'.format(
+                    self.series,
+                    svc['name']
+                )
 
         return other_services
 
