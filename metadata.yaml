@@ -19,6 +19,10 @@ description:
  OpenStack Cloud.
 tags:
   - openstack
+series:
+  - xenial
+  - trusty
+  - yakkety
 provides:
   neutron-plugin:
     interface: neutron-plugin
