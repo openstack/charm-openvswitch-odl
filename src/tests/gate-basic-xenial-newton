@@ -14,12 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Amulet tests on a basic openvswitch ODL deployment on trusty-liberty."""
+"""Amulet tests on a basic openvswitch ODL deployment on xenial-newton."""
 
 from basic_deployment import OVSODLBasicDeployment
 
 if __name__ == '__main__':
-    deployment = OVSODLBasicDeployment(series='trusty',
-                                       openstack='cloud:trusty-liberty',
-                                       source='cloud:trusty-updates/liberty')
+    deployment = OVSODLBasicDeployment(series='xenial',
+                                       openstack='cloud:xenial-newton',
+                                       source='cloud:xenial-updates/newton',
+                                       odl_version='beryllium')
     deployment.run_tests()
