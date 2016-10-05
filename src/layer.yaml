@@ -1,0 +1,5 @@
+includes: ['layer:openstack', 'interface:neutron-plugin', 'interface:ovsdb-manager', 'interface:odl-controller-api']
+options:
+  basic:
+    use_venv: True
+    include_system_packages: True

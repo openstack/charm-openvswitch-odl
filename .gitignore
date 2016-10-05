@@ -1,6 +1,8 @@
 bin
+build
 .settings
 .testrepository
 .tox
 *.pyc
 *.sw[nop]
+layers
