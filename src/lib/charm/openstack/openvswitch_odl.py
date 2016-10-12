@@ -31,7 +31,7 @@ class OVSODLCharm(charms_openstack.charm.OpenStackCharm):
         ovs.set_config('host-id', socket.gethostname(),
                        table='external_ids')
         ovs.set_manager(odl_ovsdb.connection_string())
-        hookenv.status_set('active', 'Open vSwitch configured and ready')
+        hookenv.status_set('active', 'Unit is ready')
 
     def unconfigure_openvswitch(self, odl_ovsdb):
         hookenv.log("Unconfiguring OpenvSwitch")

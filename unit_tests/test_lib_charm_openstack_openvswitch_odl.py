@@ -75,7 +75,7 @@ class TestOpenStackOVSODLCharm(Helper):
         ])
         self.get_address_in_network.assert_called_with(mock.ANY, '10.1.1.1')
         self.status_set.assert_called_with('active',
-                                           'Open vSwitch configured and ready')
+                                           'Unit is ready')
 
     def test_unconfigure_openvswitch(self):
         odl_ovsdb = mock.MagicMock()
