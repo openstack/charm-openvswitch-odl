@@ -14,11 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Amulet tests on a basic openvswitch ODL deployment on yakkety-newton."""
+"""Amulet tests on a basic openvswitch ODL deployment on zesty-ocata."""
 
 from basic_deployment import OVSODLBasicDeployment
 
 if __name__ == '__main__':
-    deployment = OVSODLBasicDeployment(series='yakkety',
+    deployment = OVSODLBasicDeployment(series='zesty',
                                        odl_version='beryllium')
     deployment.run_tests()
