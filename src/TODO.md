@@ -1,2 +1,0 @@
-amulet tests
-composer integration
