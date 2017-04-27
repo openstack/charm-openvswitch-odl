@@ -21,5 +21,6 @@ from basic_deployment import OVSODLBasicDeployment
 if __name__ == '__main__':
     deployment = OVSODLBasicDeployment(series='xenial',
                                        openstack='cloud:xenial-ocata',
-                                       source='cloud:xenial-updates/ocata')
+                                       source='cloud:xenial-updates/ocata',
+                                       odl_version='beryllium')
     deployment.run_tests()
