@@ -23,7 +23,6 @@ series:
   - xenial
   - zesty
   - trusty
-  - yakkety
 provides:
   neutron-plugin:
     interface: neutron-plugin
