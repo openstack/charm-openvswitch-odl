@@ -22,7 +22,6 @@ tags:
 series:
   - xenial
   - artful
-  - zesty
   - trusty
 provides:
   neutron-plugin:
