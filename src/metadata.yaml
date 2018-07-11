@@ -22,7 +22,7 @@ tags:
 series:
   - xenial
   - bionic
-  - artful
+  - cosmic
   - trusty
 provides:
   neutron-plugin:
