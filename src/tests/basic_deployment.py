@@ -44,7 +44,7 @@ ODL_PROFILES = {
 
 
 class OVSODLBasicDeployment(OpenStackAmuletDeployment):
-    """Amulet tests on a basic neutron-openvswtich deployment."""
+    """Amulet tests on a basic neutron-openvswitch deployment."""
 
     def __init__(self, series, openstack=None, source=None, git=False,
                  stable=False, odl_version='helium'):
